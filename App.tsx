@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Provider as PaperProvider, Button, Snackbar } from 'react-native-paper';
+import { StyleSheet, View, StatusBar } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 import Landing from './screens/Landing';
 
@@ -26,8 +26,9 @@ export default class App extends React.Component<any, { visible: boolean }>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'steelblue',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: StatusBar.currentHeight
   },
 });
