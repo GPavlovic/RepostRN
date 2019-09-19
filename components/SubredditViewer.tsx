@@ -30,7 +30,7 @@ export default class SubredditViewer extends Component<{ mode: string, subreddit
                     .then(res =>
                     {
                         this.setState({
-                            currentPosts: res.data.children
+                            currentPosts: res['data']['children']
                         })
                     });
             })

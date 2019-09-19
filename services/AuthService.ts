@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import { parseISO, isBefore } from 'date-fns';
 
 export default class AuthService
 {
@@ -6,8 +7,12 @@ export default class AuthService
     {
         try
         {
-            const value = await AsyncStorage.getItem('@access_token')
-            if (value == null)
+            const now = new Date();
+            const accessToken = await AsyncStorage.getItem('@access_token');
+            const expiryTime = await AsyncStorage.getItem('@expiry');
+
+            if (accessToken == null // Non-existent
+                || isBefore(now, parseISO(expiryTime))) // Expired
             {
                 const params = {
                     grant_type: 'https://oauth.reddit.com/grants/installed_client',
@@ -33,9 +38,14 @@ export default class AuthService
                     .then(res => res.json())
                     .then(async res =>
                     {
-                        console.log(res);
-
-                        await AsyncStorage.setItem('@access_token', res.data.access_token)
+                        // Calculate the expirt time of the token
+                        let millisecondsSinceEpoch = (new Date()).getTime();
+                        millisecondsSinceEpoch += Math.round(res['expires_in'] * 1000);
+                        const expiryTime = new Date(millisecondsSinceEpoch);
+                        console.log(expiryTime.toISOString());
+                        // Save the token and it's expiry time
+                        await AsyncStorage.setItem('@access_token', res['access_token']);
+                        await AsyncStorage.setItem('@expiry', expiryTime.toISOString());
                     });
             }
         }
