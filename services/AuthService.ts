@@ -16,7 +16,7 @@ export default class AuthService
             {
                 const params = {
                     grant_type: 'https://oauth.reddit.com/grants/installed_client',
-                    device_id: '***REMOVED***'
+                    device_id: ''
                 };
 
                 const searchParams = Object.keys(params).map((key) =>
@@ -30,7 +30,7 @@ export default class AuthService
                         method: 'POST',
                         cache: 'no-cache',
                         headers: {
-                            'Authorization': '***REMOVED***',
+                            'Authorization': '',
                             'Content-Type': 'application/x-www-form-urlencoded'
                         },
                         body: searchParams
