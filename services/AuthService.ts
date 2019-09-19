@@ -1,6 +1,8 @@
 import { AsyncStorage } from 'react-native';
 import { parseISO, isBefore } from 'date-fns';
 
+import { deviceId, authHeaderValue } from '../constants/secret';
+
 export default class AuthService
 {
     public async checkAuthStatus(): Promise<void>
@@ -16,7 +18,7 @@ export default class AuthService
             {
                 const params = {
                     grant_type: 'https://oauth.reddit.com/grants/installed_client',
-                    device_id: ''
+                    device_id: deviceId
                 };
 
                 const searchParams = Object.keys(params).map((key) =>
@@ -30,7 +32,7 @@ export default class AuthService
                         method: 'POST',
                         cache: 'no-cache',
                         headers: {
-                            'Authorization': '',
+                            'Authorization': authHeaderValue,
                             'Content-Type': 'application/x-www-form-urlencoded'
                         },
                         body: searchParams
