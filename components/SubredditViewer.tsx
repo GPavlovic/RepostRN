@@ -16,7 +16,6 @@ export default class SubredditViewer extends Component<{ mode: string, subreddit
     async componentDidMount()
     {
         const listing = await SubredditService.subreddit('all').get();
-        console.log(listing);
         this.setState({
             currentPosts: listing.data.children
         });

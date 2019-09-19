@@ -63,7 +63,6 @@ class SubredditRequest extends Service
     get()
     {
         const url = `/r/${this._subredditName}/${this._mode}?after=${this._after}&before=${this._before}&count=${this._count}&include_categories=${this._includeCategories}&limit=${this._limit}`;
-        console.log(url);
         return this._get<IListing>(url);
     }
 }

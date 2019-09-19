@@ -42,7 +42,6 @@ export default class AuthService
                         let millisecondsSinceEpoch = (new Date()).getTime();
                         millisecondsSinceEpoch += Math.round(res['expires_in'] * 1000);
                         const expiryTime = new Date(millisecondsSinceEpoch);
-                        console.log(expiryTime.toISOString());
                         // Save the token and it's expiry time
                         await AsyncStorage.setItem('@access_token', res['access_token']);
                         await AsyncStorage.setItem('@expiry', expiryTime.toISOString());
