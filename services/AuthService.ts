@@ -14,7 +14,7 @@ export default class AuthService
             const expiryTime = await AsyncStorage.getItem('@expiry');
 
             if (accessToken == null // Non-existent
-                || isBefore(now, parseISO(expiryTime))) // Expired
+                || isBefore(parseISO(expiryTime), now)) // Expired
             {
                 const params = {
                     grant_type: 'https://oauth.reddit.com/grants/installed_client',
@@ -40,7 +40,7 @@ export default class AuthService
                     .then(res => res.json())
                     .then(async res =>
                     {
-                        // Calculate the expirt time of the token
+                        // Calculate the expiry time of the token
                         let millisecondsSinceEpoch = (new Date()).getTime();
                         millisecondsSinceEpoch += Math.round(res['expires_in'] * 1000);
                         const expiryTime = new Date(millisecondsSinceEpoch);
