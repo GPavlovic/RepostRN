@@ -3,7 +3,7 @@ import { parseISO, isBefore } from 'date-fns';
 
 export default class AuthService
 {
-    async checkAuthStatus()
+    public async checkAuthStatus(): Promise<void>
     {
         try
         {
@@ -31,7 +31,7 @@ export default class AuthService
                         cache: 'no-cache',
                         headers: {
                             'Authorization': '***REMOVED***',
-                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Content-Type': 'application/x-www-form-urlencoded'
                         },
                         body: searchParams
                     })
@@ -55,7 +55,7 @@ export default class AuthService
         }
     }
 
-    async getAuthToken()
+    async getAuthToken(): Promise<string>
     {
         try
         {

@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 
 import PostSlot from './PostSlot';
-import AuthService from '../services/AuthService';
+import SubredditService from '../services/SubredditService';
 
 export default class SubredditViewer extends Component<{ mode: string, subredditName: string }>
 {
-    private readonly authService = new AuthService();
-
     state = {
         mode: 'hot',
         subredditName: 'all',
@@ -15,26 +13,13 @@ export default class SubredditViewer extends Component<{ mode: string, subreddit
         currentPosts: []
     };
 
-    componentDidMount()
+    async componentDidMount()
     {
-        this.authService.getAuthToken()
-            .then(authToken =>
-            {
-                fetch(`https://oauth.reddit.com/r/${this.state.subredditName}/${this.state.mode}`,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${authToken}`
-                        }
-                    })
-                    .then(res => res.json())
-                    .then(res =>
-                    {
-                        this.setState({
-                            currentPosts: res['data']['children']
-                        })
-                    });
-            })
-
+        const listing = await SubredditService.subreddit('all').get();
+        console.log(listing);
+        this.setState({
+            currentPosts: listing.data.children
+        });
     }
 
     render() 
