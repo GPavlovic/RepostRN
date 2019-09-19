@@ -15,10 +15,10 @@ export default class PostSlot extends Component<{ post: IPost }>
                         <Image
                             style={{ width: 50, height: 50 }}
                             source={{ uri: this.props.post.data.thumbnail }} />
-                        <Text>{this.props.post.data.title}</Text>
+                        <Text style={styles.title}>{this.props.post.data.title}</Text>
                     </Surface>
                 </View>
-                <Divider />
+                <Divider style={{ backgroundColor: 'dimgray' }} />
             </View>
         )
     }
@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     surface: {
-        flexDirection: "row"
+        flexDirection: "row",
+        backgroundColor: 'black'
+    },
+    title: {
+        color: 'white',
+        padding: 6
     }
 })
